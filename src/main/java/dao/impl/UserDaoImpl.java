@@ -48,8 +48,7 @@ public class UserDaoImpl implements UserDao {
         log.info("Trying to find all users");
         try (Session session = sessionFactory.openSession()) {
             Query<User> query = session.createQuery("from User", User.class);
-            List<User> users = query.getResultList();
-            return users;
+            return query.getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't all users from DB", e);
         }

@@ -1,11 +1,9 @@
 package config;
 
-import dao.impl.UserDaoImpl;
 import java.util.Properties;
 import javax.sql.DataSource;
 import model.User;
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -40,8 +38,4 @@ public class AppConfig {
         return factoryBean;
     }
 
-    @Bean
-    public Logger getLogger() {
-        return Logger.getLogger(UserDaoImpl.class);
-    }
 }
