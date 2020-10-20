@@ -2,6 +2,9 @@ package dao.impl;
 
 import dao.UserDao;
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import model.User;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -50,7 +53,22 @@ public class UserDaoImpl implements UserDao {
             Query<User> query = session.createQuery("from User", User.class);
             return query.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't all users from DB", e);
+            throw new RuntimeException("Can't get all users from DB", e);
+        }
+    }
+
+    @Override
+    public User get(Long id) {
+        log.info("Trying to get user with id" + id);
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+            Root<User> root = criteriaQuery.from(User.class);
+            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("id"), id));
+            Query<User> query = session.createQuery(criteriaQuery);
+            return query.getSingleResult();
+        } catch (Exception e) {
+            throw new RuntimeException("Can't get user with id " + id + " from DB", e);
         }
     }
 }

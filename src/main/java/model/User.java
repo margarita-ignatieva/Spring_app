@@ -19,6 +19,8 @@ public class User {
     private String email;
     @NotNull
     private String password;
+    @NotNull
+    private String name;
 
     public User(String email, String password) {
         this.email = email;
@@ -26,6 +28,14 @@ public class User {
     }
 
     public User() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getId() {
