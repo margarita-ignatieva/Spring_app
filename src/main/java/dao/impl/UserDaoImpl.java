@@ -2,9 +2,7 @@ package dao.impl;
 
 import dao.UserDao;
 import java.util.List;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import java.util.Optional;
 import model.User;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -58,15 +56,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User get(Long id) {
+    public Optional<User> get(Long id) {
         log.info("Trying to get user with id" + id);
         try (Session session = sessionFactory.openSession()) {
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
-            Root<User> root = criteriaQuery.from(User.class);
-            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("id"), id));
-            Query<User> query = session.createQuery(criteriaQuery);
-            return query.getSingleResult();
+            Query<User> query = session.createQuery("FROM User WHERE id = :id");
+            query.setParameter("id", id);
+            return query.uniqueResultOptional();
         } catch (Exception e) {
             throw new RuntimeException("Can't get user with id " + id + " from DB", e);
         }

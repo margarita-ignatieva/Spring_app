@@ -1,6 +1,7 @@
 package service;
 
 import java.util.List;
+import java.util.Optional;
 import model.User;
 
 public interface UserService {
@@ -8,5 +9,5 @@ public interface UserService {
 
     List<User> listUsers();
 
-    User get(Long id);
+    Optional<User> get(Long id);
 }
