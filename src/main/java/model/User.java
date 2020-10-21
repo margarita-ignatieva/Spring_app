@@ -19,13 +19,29 @@ public class User {
     private String email;
     @NotNull
     private String password;
+    @NotNull
+    private String name;
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
+    public User(Long id, String email, String password, String name) {
+        this(email,password);
+        this.id = id;
+        this.name = name;
+    }
+
     public User() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getId() {

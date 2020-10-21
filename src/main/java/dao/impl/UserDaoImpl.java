@@ -50,7 +50,19 @@ public class UserDaoImpl implements UserDao {
             Query<User> query = session.createQuery("from User", User.class);
             return query.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't all users from DB", e);
+            throw new RuntimeException("Can't get all users from DB", e);
+        }
+    }
+
+    @Override
+    public User get(Long id) {
+        log.info("Trying to get user with id" + id);
+        try (Session session = sessionFactory.openSession()) {
+            Query<User> query = session.createQuery("FROM User WHERE id = :id");
+            query.setParameter("id", id);
+            return query.getSingleResult();
+        } catch (Exception e) {
+            throw new RuntimeException("Can't get user with id " + id + " from DB", e);
         }
     }
 }
