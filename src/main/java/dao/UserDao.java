@@ -1,7 +1,6 @@
 package dao;
 
 import java.util.List;
-import java.util.Optional;
 import model.User;
 
 public interface UserDao {
@@ -9,5 +8,5 @@ public interface UserDao {
 
     List<User> listUsers();
 
-    Optional<User> get(Long userId);
+    User get(Long userId);
 }

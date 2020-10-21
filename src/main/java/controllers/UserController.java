@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import service.UserService;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping("/user")
 public class UserController {
     private static final Logger log = Logger.getLogger(UserController.class);
     private final UserService userService;
@@ -23,7 +23,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/inject")
+    @GetMapping("/inject")
     public void inject() {
         log.info("Adding 4 users to DB");
         User shinoda = new User("mike@mail.com", "123er");
@@ -36,11 +36,10 @@ public class UserController {
         userService.add(feniks);
     }
 
-    @GetMapping(value = "/{userId}")
+    @GetMapping("/{userId}")
     public UserResponseDto get(@PathVariable Long userId) {
         log.info("Getting userDto by id" + userId);
-        return copyUserToUserDto(userService.get(userId)
-                .orElse(new User(null, null,null,null)));
+        return copyUserToUserDto(userService.get(userId));
     }
 
     @GetMapping

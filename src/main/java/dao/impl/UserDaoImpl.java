@@ -2,7 +2,6 @@ package dao.impl;
 
 import dao.UserDao;
 import java.util.List;
-import java.util.Optional;
 import model.User;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -56,12 +55,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> get(Long id) {
+    public User get(Long id) {
         log.info("Trying to get user with id" + id);
         try (Session session = sessionFactory.openSession()) {
             Query<User> query = session.createQuery("FROM User WHERE id = :id");
             query.setParameter("id", id);
-            return query.uniqueResultOptional();
+            return query.getSingleResult();
         } catch (Exception e) {
             throw new RuntimeException("Can't get user with id " + id + " from DB", e);
         }

@@ -28,9 +28,8 @@ public class User {
     }
 
     public User(Long id, String email, String password, String name) {
+        this(email,password);
         this.id = id;
-        this.email = email;
-        this.password = password;
         this.name = name;
     }
 
